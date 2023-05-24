@@ -27,15 +27,17 @@ class MonDrawer extends StatelessWidget {
             leading: Icon(Icons.man),
             title: Text("Election"),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/home');
             },
+
           ),
           ListTile(
-            leading: Icon(Icons.production_quantity_limits),
-            title: Text("Compte"),
+            leading: Icon(Icons.safety_divider),
+            title: Text("Sections"),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacementNamed(context, '/section');
             },
+            enabled: MyHomePage.currentUser.organisation==null?false:true,
           ),
           ListTile(
             leading: Icon(Icons.store),
@@ -43,6 +45,7 @@ class MonDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
+            enabled: MyHomePage.currentUser.organisation==null?false:true,
           ),
           ListTile(
             leading: const Icon(Icons.contacts),
@@ -50,13 +53,14 @@ class MonDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
+            enabled: MyHomePage.currentUser.organisation==null?false:true,
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text("Se deconnecter"),
             onTap: () {
               // Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushReplacementNamed(context, '/choice');
             },
           ),
         ],

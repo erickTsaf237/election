@@ -55,6 +55,19 @@ ElectionDTO.http(data){
       'annee': annee.toString()
     };
   }
+  @override
+  Map<String, dynamic> toJson2() {
+    // TODO: implement toJson
+    return {
+      '_id': id,
+      'libele': libele,
+      'code': code,
+      'id_organisation': id_organisation,
+      'valeur': valeur,
+      'description': description,
+      'annee': annee.toString()
+    };
+  }
 
   Future<http.Response>  delete() async {
 

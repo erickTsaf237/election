@@ -3,13 +3,13 @@ import 'dart:developer';
 
 import 'package:election/backend/config.dart';
 import 'package:election/backend/user.dart';
+import 'package:election/employe/logup_employe.dart';
+import 'package:election/main.dart';
 import 'package:flutter/material.dart';
 
-import '../backend/organisation.dart';
-import '../main.dart';
-import 'logup.dart';
-
 class Login extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -18,6 +18,7 @@ class Login extends StatelessWidget {
 }
 
 class MyLogin extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -26,8 +27,9 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLogin extends State<MyLogin> {
-  var loginController = TextEditingController(text: 'ericktsafack2017@gmail.com');
-  var passwordController = TextEditingController(text: '12345678');
+
+  var loginController = TextEditingController(text: 'gobinanelson@gmail.com');
+  var passwordController = TextEditingController(text: '123123123');
   var confirmationController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
@@ -158,7 +160,7 @@ class _MyLogin extends State<MyLogin> {
 
                         Container(
                           width: 100,
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                           child: ElevatedButton(
                             onPressed: () async {
                               var loged = await _submit(context);
@@ -182,7 +184,11 @@ class _MyLogin extends State<MyLogin> {
                                   fontSize: 13,
                                   color: _text_color)),
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, '/logup');
+                            if(MyHomePage.who == 'employe') {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LogupEmplye()));
+                            }else {
+                              Navigator.pushReplacementNamed(context, '/logup');
+                            }
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => Logup()));
                           },
                         )
@@ -256,13 +262,13 @@ class _MyLogin extends State<MyLogin> {
       login = loginController.text;
       password = passwordController.text;
       _formKey.currentState!.save();
-      var loged = await UserBackend.log_in(login, password);
+      var loged = await UserBackend.log_in(login, password, identite: MyHomePage.who);
       if (loged) {
         // return 1;
         // confirm=true;
         setState(() {
           confirm = true;
-          print(BackendConfig.token+'     ooooooooooooooooooooooo');
+          print('${BackendConfig.token}     ooooooooooooooooooooooo');
           confirmationController = TextEditingController(text: BackendConfig.token);
         });
         // Navigator.pushReplacementNamed(context, '/home');
@@ -277,7 +283,7 @@ class _MyLogin extends State<MyLogin> {
     if (_formKey2.currentState!.validate()) {
       var token = confirmationController.text;
       _formKey2.currentState!.save();
-      var loged = await UserBackend.confirmToken(login, password, token);
+      var loged = await UserBackend.confirmToken(login, password, token, identite: MyHomePage.who);
       if (loged) {
         Navigator.pushReplacementNamed(context, '/home');
       }

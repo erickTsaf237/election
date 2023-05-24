@@ -49,6 +49,19 @@ class CandidatDTO extends BackendConfig{
     };
   }
 
+  @override
+  Map<String, dynamic> toJson2(){
+    return {
+      '_id': id,
+      'nom': nom,
+      'prenom': prenom,
+      'parti': parti,
+      'lien': lien,
+      'id_election': id_election,
+      'date_naissance': date_naissance.toString(),
+    };
+  }
+
   static CandidatDTO toCandidat(Map<String, dynamic> re){
     return CandidatDTO(nom: re['nom'], prenom: re['prenom'], parti: re['parti'], id: re['_id']);
   }

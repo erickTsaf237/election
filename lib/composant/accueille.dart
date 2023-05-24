@@ -42,9 +42,9 @@ class _MyAccueille extends State<MyAccueille> {
               future: ElectionDTO.getAll(),
               builder: (context, AsyncSnapshot<http.Response> response) {
                 // print(response);
-                if (response.hasError)
-                  return Text('Il y\'a eu une erreur');
-                else if (response.hasData) {
+                if (response.hasError) {
+                  return const Text('Il y\'a eu une erreur');
+                } else if (response.hasData) {
                   String? a = response.data?.body;
                   String b = a!;
                   dynamic r = jsonDecode(b);
@@ -54,7 +54,7 @@ class _MyAccueille extends State<MyAccueille> {
                       Election(ElectionDTO.http(r[i])),
                   ]);
                 }
-                return Text('Liste vide');
+                return const Text('Liste vide');
               }),
     );
   }
@@ -68,6 +68,9 @@ class _MyAccueille extends State<MyAccueille> {
 }
 
 getOrg() async {
+  if(MyHomePage.who == 'employe') {
+    return;
+  }
   var v = await OrganisationDTO.getOrganisation(MyHomePage.currentUser.id!);
   if (v.statusCode >= 200 && v.statusCode < 300) {
     try {
