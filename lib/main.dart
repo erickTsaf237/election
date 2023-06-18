@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:election/backend/config.dart';
 import 'package:election/backend/employe.dart';
 import 'package:election/composant/MonDrawer.dart';
 import 'package:election/composant/accueille.dart';
@@ -60,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+    BackendConfig.etat = this;
     print(MyHomePage.currentUser.organisation);
     showDialog(
         context: context,

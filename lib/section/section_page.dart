@@ -8,6 +8,7 @@ import 'package:election/section/create_section.dart';
 import 'package:election/section/section.dart';
 import 'package:flutter/material.dart';
 import '../backend/section.dart';
+import '../bureau/create_bureau.dart';
 import '../composant/MonDrawer.dart';
 import '../employe/create_employe.dart';
 import '../main.dart';
@@ -114,79 +115,66 @@ class _MySectionePage extends State<MySectionePage> {
   void _incrementCounter() {
     Section.etat = this;
     setState(() {});
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CreateEmploye();
-        });
   }
+  late int tabIndex = 0;
+  late Function flottingButtonActionFunction;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    // getOrg();
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Liste des Employe'),
-        actions: [
-          // getPopupMenuButton(context),
-          IconButton(
-              onPressed: () {
-                // Navigator.pushReplacementNamed(context, '/home');
-                Navigator.push(
-                    context, MaterialPageRoute(
-                    builder: (context) => BureauPage()));
-              },
-              icon: Icon(Icons.other_houses))
-        ],
-      ),
-      drawer: MyHomePage.who == 'admin' ? null : const MonDrawer(),
-      body: Builder(
-        builder: (BuildContext context) {
-          return Container(
-            alignment: Alignment.center,
-            child: MyHomePage.currentUser.organisation == null
-                ? const Text('Vous devez creer une organisation d\'abord !!')
-                : FutureBuilder(
-                    future: EmployeDTO.getAll(),
-                    builder: (context, AsyncSnapshot<http.Response> response) {
-                      if (response.hasError) {
-                        return const Text('Il y\'a eu une erreur');
-                      } else if (response.hasData) {
-                        String? a = response.data?.body;
-                        String b = a!;
-                        dynamic r = jsonDecode(b);
-                        int taille = r.length;
-                        if (taille == 0) {
-                          return const Text(
-                              'Cette section ne contient pas d\'employes');
-                        }
-                        Employe.liste = [];
-                        return ListView(children: [
-                          for (int i = 0; i < taille; i++)
-                            Employe(EmployeDTO.toEmploye(r[i])),
-                        ]);
-                      }
-                      return Text('Liste vide');
-                    }),
-          );
-        },
-      ),
-      floatingActionButton:
-          getFlotting(), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+     return DefaultTabController(length: 2, child: Scaffold(
+       body: TabBarView(children: [
+         getListeSectionItem(context),
+         getListeBureauItem(context)
+       ],),
+       drawer: MonDrawer(),
+       appBar: AppBar(
+         title: const Text('section page'),
+         bottom:  TabBar(tabs: const [
+           Text('Employes', style: TextStyle(fontSize: 20)),
+           Text('Bureaux', style: TextStyle(fontSize: 20)),
+         ], onTap: (int index){
+           tabIndex = index;
+           _incrementCounter();
+         }),
+       ),
+       floatingActionButton: getFlotting(),
+    ));
+
   }
+  
+  
+
 
   getFlotting() {
     if (MyHomePage.who == 'admin') {
-      return FloatingActionButton(
+      if(tabIndex == 0) {
+        return FloatingActionButton(
         onPressed: () async {
-          _incrementCounter();
+          showDialog(
+              context: context,
+              builder: (context) {
+                return CreateEmploye();
+              });
         },
         tooltip: 'Nouvelle Section',
         child: const Icon(Icons.add),
       );
+      }
+    }else if (MyHomePage.who == 'employe') {
+      if(tabIndex == 1) {
+        return FloatingActionButton(
+        onPressed: () async {
+          showDialog(context: context, builder: (context){
+            return CreateBureau();
+          });
+        },
+        tooltip: 'Nouvelle Section',
+        child: const Icon(Icons.add),
+      );
+      }
     }
+
     return null;
   }
 
@@ -197,7 +185,36 @@ class _MySectionePage extends State<MySectionePage> {
     // BackendConfig.etat = this;
     Employe.etat = this;
   }
+}
+getListeSectionItem(BuildContext context) {
 
+  return Container(
+    alignment: Alignment.center,
+    child: MyHomePage.currentUser.organisation == null
+        ? const Text('Vous devez creer une organisation d\'abord !!')
+        : FutureBuilder(
+        future: EmployeDTO.getAll(),
+        builder: (context, AsyncSnapshot<http.Response> response) {
+          if (response.hasError) {
+            return const Text('Il y\'a eu une erreur');
+          } else if (response.hasData) {
+            String? a = response.data?.body;
+            String b = a!;
+            dynamic r = jsonDecode(b);
+            int taille = r.length;
+            if (taille == 0) {
+              return const Text(
+                  'Cette section ne contient pas d\'employes');
+            }
+            Employe.liste = [];
+            return ListView(children: [
+              for (int i = 0; i < taille; i++)
+                Employe(EmployeDTO.toEmploye(r[i])),
+            ]);
+          }
+          return Text('Liste vide');
+        }),
+  );
 }
 
 getPopupMenuButton(BuildContext context) {
@@ -218,13 +235,11 @@ getPopupMenuButton(BuildContext context) {
             Navigator.pop(context);
             Navigator.push(
                 context, MaterialPageRoute(
-                builder: (context) => BureauPage()));
+                builder: (context) => BureauPage(BackendConfig.curenBureau!)));
             Navigator.push(
                 context, MaterialPageRoute(
-                builder: (context) => BureauPage()));
-            // Navigator.push(
-            //     context, MaterialPageRoute(
-            //     builder: (context) => BureauPage()));
+                builder: (context) => BureauPage(BackendConfig.curenBureau!)));
+
           },
         ),
         PopupMenuItem(
@@ -239,28 +254,3 @@ getPopupMenuButton(BuildContext context) {
     onSelected: (value) => {},
   );
 }
-
-/*getElectionList({String? param}) {
-
-  return FutureBuilder(
-    future: param!=null?getELectionListe(param: param):getELectionListe(),
-    builder: (context, reponse) {
-      if (reponse.hasData) {
-        return ListView(
-          children: [
-            for (var l in reponse.data!)
-              Election(l),
-            // Text(l['libele']),
-          ],
-        );
-
-        // ListView.builder(itemCount: snapshot.data?.length, itemBuilder:(context, index){
-        //   return Text(snapshot.data![index]['libele']);
-        // },);
-      } else if (reponse.hasError) {
-        return Text("Error ");
-      }
-      return CircularProgressIndicator();
-    },
-  );
-}*/

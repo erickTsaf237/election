@@ -226,7 +226,7 @@ class _MyCreateBureau extends State<MyCreateBureau> {
       var loged = await bureau!.save('bureau', token: BackendConfig.token);
       if (loged) {
         Navigator.pop(context);
-        Bureau.etat?.setState(() {});
+        BackendConfig.etat?.setState(() {});
       }
     }
     return 0;

@@ -11,7 +11,9 @@ import 'election.dart';
 
 abstract class BackendConfig{
 
-  static const String host = "http://localhost:3000";
+ static const String host = "http://localhost:3000";
+  // static const String host = "http://192.168.43.19:3000";
+  //http://192.168.43.240:4000/classes
   static String token = '';
   static State? etat;
   static ElectionDTO? curenElectifon;
@@ -51,7 +53,7 @@ abstract class BackendConfig{
     return res;
   }
 
-  Future<http.Response> update(String path, {String token=''}) async {
+  Future<bool> update(String path, {String token=''}) async {
     final res = await http.put(Uri.parse("${BackendConfig.host}/$path"),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -63,7 +65,7 @@ abstract class BackendConfig{
     // print(jsonEncode(res.body));
     // print(res.body);
 
-    return res;
+    return true;
   }
 
   static Future<http.Response> getAll(String path, String id) async {

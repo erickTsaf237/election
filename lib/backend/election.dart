@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:election/main.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,21 +18,16 @@ class ElectionDTO extends BackendConfig{
   late String id_organisation;
   late DateTime annee;
   late int valeur;
+  late List<List<String>> champElecteur;
 
 
   ElectionDTO( this.libele, this.code, this.annee, this.valeur, {this.id}){
     id_organisation = MyHomePage.currentUser.organisation!.id!;
     description = '';
+    champElecteur = [['','false']];
+    print(('creation'));
   }
 
-  /*ElectionDTO.or(){
-    libele='Election du delegue de QSIR et de ses adjoins';
-    code='le code';
-    annee=DateTime.now();
-    valeur=5;
-    description='le libelele libelele libelele libelele libelele libelele libelele libelele libelele libele';
-    id_organisation = MyHomePage.currentUser.organisation!.id!;
-}*/
 
 ElectionDTO.http(data){
     libele=data['libele'];
@@ -40,6 +37,22 @@ ElectionDTO.http(data){
     description=data['description'];
     id=data['_id'];
     id_organisation = MyHomePage.currentUser.organisation!.id!;
+    champElecteur = [];
+    if (data['champElecteur'] != null) {
+      data['champElecteur'].forEach((e){
+        // champElecteur.add([]);
+        List<String> list= [];
+        e.forEach((a){
+          list.add(a);
+        });
+        champElecteur.add(list);
+      });
+
+    }
+    if (champElecteur.isEmpty){
+      champElecteur = [['', 'false']];
+    }
+
 }
 
   @override
@@ -65,7 +78,8 @@ ElectionDTO.http(data){
       'id_organisation': id_organisation,
       'valeur': valeur,
       'description': description,
-      'annee': annee.toString()
+      'annee': annee.toString(),
+      'champElecteur': champElecteur
     };
   }
 

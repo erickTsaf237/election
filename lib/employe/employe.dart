@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:election/backend/config.dart';
 import 'package:election/main.dart';

@@ -155,7 +155,9 @@ class _MyCreateOrganisation extends State<MyCreateOrganisation> {
       print(organisation?.toJson());
       var loged = await organisation!.create();
       if (loged) {
-        Navigator.pop(context);
+        BackendConfig.etat!.setState(() {
+          Navigator.pop(context);
+        });
       }
     }
     return 0;

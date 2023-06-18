@@ -105,6 +105,10 @@ class BureauDTO extends BackendConfig {
   }
 
   static getAllByIdElection(String idElection) {
+    if (MyHomePage.who == 'admin'){
+      return  BackendConfig.getAll(
+          'bureau/election', idElection);
+    }
     return BackendConfig.getAll(
         'bureau/section/election/$idElection', BackendConfig.curenSection!.id!);
   }

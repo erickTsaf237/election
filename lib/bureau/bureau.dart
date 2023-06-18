@@ -3,6 +3,7 @@ import 'package:election/section/section_page.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/bureau_dto.dart';
+import 'bureau_page.dart';
 
 class Bureau extends StatefulWidget {
   late BureauDTO bureau;
@@ -56,7 +57,7 @@ class _Bureau extends State<Bureau> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SectionePage()));
+                    builder: (context) => MyBureauPage(bureau)));
           },
           onLongPress: () {
             showDialog(
