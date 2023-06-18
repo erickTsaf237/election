@@ -14,7 +14,7 @@ class MonDrawer extends StatelessWidget {
         children: <Widget>[
            UserAccountsDrawerHeader(
             accountName: Text('${MyHomePage.currentUser.prenom} ${MyHomePage.currentUser.nom}'),
-            accountEmail: Text(MyHomePage.currentUser.login),
+            accountEmail: SelectableText(MyHomePage.currentUser.login),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.orange,
               child: Text(
@@ -60,7 +60,9 @@ class MonDrawer extends StatelessWidget {
             title: const Text("Se deconnecter"),
             onTap: () {
               // Navigator.pop(context);
+
               Navigator.pushReplacementNamed(context, '/choice');
+              // Navigator.of(context).pushReplacementNamed('/choice');
             },
           ),
         ],

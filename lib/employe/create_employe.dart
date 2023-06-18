@@ -110,6 +110,19 @@ class _MyCreateEmploye extends State<MyCreateEmploye> {
                       },
 
                       onSaved: (value) => user?.prenom = value!,
+                    )
+                    ,TextFormField(
+                      controller: loginController,
+                      // initialValue: depence.id!= null? "${depence.libele}":"",
+                      decoration: const InputDecoration(labelText: 'login'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Veuillez entrer votre login';
+                        }
+                        return null;
+                      },
+
+                      onSaved: (value) => user?.login = value!,
                     ),/*
                     TextFormField(
                       controller: loginController,

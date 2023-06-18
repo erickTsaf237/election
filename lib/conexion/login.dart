@@ -29,7 +29,7 @@ class MyLogin extends StatefulWidget {
 class _MyLogin extends State<MyLogin> {
 
   var loginController = TextEditingController(text: 'gobinanelson@gmail.com');
-  var passwordController = TextEditingController(text: '123123123');
+  var passwordController = TextEditingController(text: '123456789');
   var confirmationController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();

@@ -163,9 +163,12 @@ class _MySectionePage extends State<MySectionePage> {
       }
     }else if (MyHomePage.who == 'employe') {
       if(tabIndex == 1) {
+
         return FloatingActionButton(
         onPressed: () async {
+          BackendConfig.etat = this;
           showDialog(context: context, builder: (context){
+
             return CreateBureau();
           });
         },

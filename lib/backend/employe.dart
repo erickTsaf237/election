@@ -46,6 +46,7 @@ class EmployeDTO extends BackendConfig {
       'nom': nom,
       'prenom': prenom,
       'confirmer': confirmer,
+      'login': login,
       'password': password,
       'date_naissance': date_naissance,
       'id_section': id_section

@@ -98,6 +98,7 @@ class _MyCreate_champ_Electeur extends State<MyCreate_champ_Electeur> {
                           maxLength: 64,
                           validator: (value) {
                             if (value!.isEmpty) {
+                              print('${candidat!.champElecteur.length}  ===================');
                               setState((){
                                 candidat?.champElecteur.removeAt(index);
                               });
@@ -106,7 +107,7 @@ class _MyCreate_champ_Electeur extends State<MyCreate_champ_Electeur> {
                             return null;
                           },
                           onChanged: (value){
-                            if (value.isEmpty) {
+                            if (value.isEmpty && candidat!.champElecteur.length > 1) {
                               setState(() {
                                 candidat?.champElecteur.removeAt(index);
                               });

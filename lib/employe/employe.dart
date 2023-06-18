@@ -39,10 +39,13 @@ class _Section extends State<Employe> {
                 boo(context);
                 boo(context);
             }),
-              PopupMenuItem(child:ListTile(leading: const Icon(Icons.upgrade), title:const Text('definir chef') ,), onTap: (){
-                print('object');
+              PopupMenuItem(child:const ListTile(leading: Icon(Icons.upgrade), title:Text('definir chef') ,), onTap: (){
                 definirChef(context);
                 definirChef(context);
+              },),
+              PopupMenuItem(child:const ListTile(leading: Icon(Icons.info), title:Text('Affcher ID') ,), onTap: (){
+                afficherInfo(context);
+                afficherInfo(context);
               },)
             ];
           }):null,
@@ -106,7 +109,7 @@ class _Section extends State<Employe> {
                 onPressed: () async {
                   BackendConfig.curenSection!.id_responsable = employe.id!;
                   var re = await BackendConfig.curenSection!.updateMe();
-                  print(re.statusCode);
+                  // print(re.statusCode);
                   Navigator.pop(context);
                   Employe.etat!.setState(() {});
                 },
@@ -122,6 +125,33 @@ class _Section extends State<Employe> {
                     Navigator.pop(context);
                   },
                   child: const Text('Annuler')),
+            ],
+          );
+        });
+  }
+
+
+  afficherInfo(BuildContext context){
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('${employe.nom} ${employe.prenom}'),
+            content: SelectableText(
+                'Identifiant: ${employe.id} ', ),
+            actions: [
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  Employe.etat!.setState(() {});
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                child: const Text('Ok'),
+
+              ),
             ],
           );
         });

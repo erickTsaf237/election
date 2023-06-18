@@ -27,7 +27,7 @@ class MyLogupEmplye extends StatefulWidget {
 class _MyLogupEmplye extends State<MyLogupEmplye> {
 
   var loginController = TextEditingController(text: 'ericktsafack2017@gmail.com');
-  var passwordController = TextEditingController(text: '12345678');
+  var passwordController = TextEditingController(text: '123456789');
   var confirmationController = TextEditingController();
   var numeroController = TextEditingController();
   var idController = TextEditingController();
@@ -290,6 +290,8 @@ class _MyLogupEmplye extends State<MyLogupEmplye> {
           setState(() {
             nom = a['nom'];
             prenom = a['prenom'];
+            login = a['login'];
+            loginController.text = login;
             confirm = true;
             _niveau = 2;
             _erreur = false;

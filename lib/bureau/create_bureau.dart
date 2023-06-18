@@ -113,7 +113,7 @@ class _MyCreateBureau extends State<MyCreateBureau> {
                     controller: villeController,
                     // initialValue: depence.id!= null? "${depence.libele}":"",
                     decoration: const InputDecoration(labelText: 'Ville'),
-                    maxLength: 12,
+                    maxLength: 32,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Veuillez entrer la ville';
@@ -141,7 +141,7 @@ class _MyCreateBureau extends State<MyCreateBureau> {
                     // initialValue: depence.id!= null? "${depence.libele}":"",
                     decoration:
                         const InputDecoration(labelText: 'Localisation'),
-                    maxLength: 12,
+                    maxLength: 32,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Veuillez entrer la localisation';
