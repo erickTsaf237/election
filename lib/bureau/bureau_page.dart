@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../backend/bureau_dto.dart';
+import '../backend/electeur_dto.dart';
+import '../electeur/createElecteur.dart';
 import '../main.dart';
 import 'bureau.dart';
 
@@ -110,10 +112,15 @@ class _MyBureauPage extends State<MyBureauPage> {
 
   getFlotting() {
     if (MyHomePage.who == 'employe') {
-      if (page == pageList[0] && MyHomePage.currentEMploye.id == BackendConfig.curenSection?.id_responsable) {
+      if (page == pageList[0]) {
+      // if (page == pageList[0] && MyHomePage.currentEMploye.id == BackendConfig.curenSection?.id_responsable) {
         return FloatingActionButton(
           onPressed: () async {
-            _incrementCounter();
+            Bureau.etat = this;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyCreateElecteur(ElecteurDTO(bureau.id_section,bureau.id_election, bureau.id!, MyHomePage.currentEMploye.id!))));
           },
           tooltip: 'Importer une Liste d\'electeurs',
           child: const Icon(Icons.add),
