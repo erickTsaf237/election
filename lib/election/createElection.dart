@@ -1,11 +1,7 @@
 
-import 'dart:convert';
 
 import 'package:election/backend/election.dart';
-import 'package:election/backend/organisation.dart';
-import 'package:election/backend/user.dart';
 import 'package:election/election/election.dart';
-import 'package:election/main.dart';
 import 'package:flutter/material.dart';
 
 import '../backend/config.dart';
@@ -139,8 +135,10 @@ class _MyCreateElection extends State<MyCreateElection> {
                       return null;
                     },
 
+
                     onSaved: (value) => election?.description = value!,
                   ),
+
                   Container(
                     // width: 100,
                     margin: const EdgeInsets.only(top: 10),

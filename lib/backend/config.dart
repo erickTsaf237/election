@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:election/backend/section.dart';
 import 'package:election/main.dart';
@@ -31,7 +32,7 @@ abstract class BackendConfig{
           'Content-Type': 'application/json',
           'authorization': 'Bearer $token'
         },
-        body: jsonEncode(toJson())
+        body: jsonEncode(await toJson())
     );
     // return await logUserIn(res);
     // print(jsonEncode(res.body));
@@ -40,14 +41,30 @@ abstract class BackendConfig{
     return true;
   }
 
+ Future<http.Response> save3(String path, {String token=''}) async {
+   final res = await http.post(Uri.parse("${BackendConfig.host}/$path"),
+       headers: <String, String>{
+         'Content-Type': 'application/json',
+         'authorization': 'Bearer $token'
+       },
+       body: jsonEncode(await toJson())
+   );
+   // return await logUserIn(res);
+   // print(jsonEncode(res.body));
+   // print(res.body);
+
+   return res;
+ }
+
   Future<http.Response> save2(String path, {String token=''}) async {
     final res = await http.post(Uri.parse("${BackendConfig.host}/$path"),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'authorization': 'Bearer $token'
         },
-        body: jsonEncode(toJson())
+        body: jsonEncode( await toJson())
     );
+
     // return await logUserIn(res);
     // print(jsonEncode(res.body));
     // print(res.body);
@@ -55,13 +72,34 @@ abstract class BackendConfig{
     return res;
   }
 
+ Future<bool> uploadFile(File file,String path,  String id) async {
+   final request = http.MultipartRequest('PUT', Uri.parse("${BackendConfig.host}/$path"));
+   final multipartFile = http.MultipartFile(
+     'image',
+     file.readAsBytes().asStream(),
+     file.lengthSync(),
+     filename: file.path.split('/').last,
+   );
+   request.files.add(multipartFile);
+   request.fields['_id'] = id;
+   final streamedResponse = await request.send();
+   final response = await http.Response.fromStream(streamedResponse);
+   if (response.statusCode == 200) {
+     print('File uploaded');
+     return true;
+   } else {
+     print('File upload failed with status ${response.statusCode}');
+     return false;
+   }
+ }
+
   Future<bool> update(String path, {String token=''}) async {
     final res = await http.put(Uri.parse("${BackendConfig.host}/$path"),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'authorization': 'Bearer $token'
         },
-        body: jsonEncode(toJson2())
+        body: jsonEncode(await toJson2())
     );
     // return await logUserIn(res);
     // print(jsonEncode(res.body));
