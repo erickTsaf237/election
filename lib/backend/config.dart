@@ -12,8 +12,8 @@ import 'election.dart';
 
 abstract class BackendConfig{
 
- static const String host = "http://localhost:3000";
- // static const String host = "https://organisations.adaptable.app";
+ // static const String host = "http://localhost:3000";
+ static const String host = "https://organisations.adaptable.app";
   // static const String host = "http://192.168.43.19:3000";
   //http://192.168.43.240:4000/classes
   static String token = '';
