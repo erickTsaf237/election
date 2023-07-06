@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:election/backend/config.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../backend/election.dart';
 import '../backend/organisation.dart';
@@ -54,7 +55,19 @@ class _MyAccueille extends State<MyAccueille> {
                       Election(ElectionDTO.http(r[i])),
                   ]);
                 }
-                return const Text('Liste vide');
+                return  Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: const Text(
+                    'Shimmer',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight:
+                      FontWeight.bold,
+                    ),
+                  ),
+                );
               }),
     );
   }

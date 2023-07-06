@@ -133,6 +133,21 @@ class _MyCreateElection extends State<MyCreateCandidat> {
                   ),
                   Row(
                     children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            pickImage(this, _imageFile).then((value) => {
+                              if (value != null)
+                                {
+                                  setState(() {
+                                    print(value);
+                                    print(_imageFile);
+                                    _imageFile = value;
+                                    // candidat?.image = null;
+                                  })
+                                }
+                            });
+                          },
+                          child: Text('Select an image')),
                       if (candidat!.image.isEmpty || _imageFile != null)
                         _imageFile != null
                             ? Image.file(
@@ -150,20 +165,7 @@ class _MyCreateElection extends State<MyCreateCandidat> {
                           height: 100,
                           width: 80,
                         ),
-                      ElevatedButton(
-                          onPressed: () {
-                            pickImage(this, _imageFile).then((value) => {
-                                  if (value != null)
-                                    {
-                                      setState(() {
-                                        print(value);
-                                        _imageFile = value;
-                                        // candidat?.image = null;
-                                      })
-                                    }
-                                });
-                          },
-                          child: Text('Select an image')),
+
                     ],
                   ),
                   /* TextFormField(

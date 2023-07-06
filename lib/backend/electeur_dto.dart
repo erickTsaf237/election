@@ -1,7 +1,20 @@
-import 'dart:convert';
 
 import 'package:election/backend/config.dart';
 import 'package:http/http.dart' as http;
+
+class PetitTest{
+  late String nom;
+  late String prenom;
+  late String cni;
+
+  PetitTest(this.nom, this.prenom, this.cni);
+
+  PetitTest.fromMap(Map<String, String> map){
+    nom = map['nom']!;
+    prenom = map['prenom']!;
+    cni = map['cni']!;
+  }
+}
 
 class ElecteurDTO extends BackendConfig {
   late String? id;
@@ -18,6 +31,28 @@ class ElecteurDTO extends BackendConfig {
   late String confirmer;
   late String password;
   late String date_naissance;
+  late String registration_number;
+
+  static const List<String> elcteurField2 = ['nom','prenom','cni'];
+  static const List<String> elcteurField = [
+
+
+
+    'id_election',
+    'id_employe',
+    'id_bureau',
+    'id_section',
+    'nom',
+    'prenom',
+    'confirmer',
+    'login',
+    'password',
+    'image',
+    'cni',
+    'registration_number',
+    'numero',
+    'date_naissance'
+  ];
 
   ElecteurDTO(
       this.id_section, this.id_election, this.id_bureau, this.id_employe,
@@ -27,6 +62,7 @@ class ElecteurDTO extends BackendConfig {
       this.cni = '',
       this.login = '',
       this.numero = '',
+      this.registration_number = '',
       this.confirmer = '',
       this.password = '',
       this.date_naissance = ''});
@@ -40,8 +76,11 @@ class ElecteurDTO extends BackendConfig {
     return id! == id_chef;
   }
 
+
+
   @override
   Map<String, dynamic> toJson() {
+
     return {
       'id_election': id_election,
       'id_employe': id_employe,
@@ -54,6 +93,7 @@ class ElecteurDTO extends BackendConfig {
       'password': password,
       'image': image,
       'cni': cni,
+      'registration_number': registration_number,
       'date_naissance': date_naissance
     };
   }
@@ -73,20 +113,28 @@ class ElecteurDTO extends BackendConfig {
       'password': password,
       'image': image,
       'cni': cni,
+      'registration_number': registration_number,
       'date_naissance': date_naissance
     };
   }
-
   static ElecteurDTO toElecteur(Map<String, dynamic> re) {
     var emp = ElecteurDTO.new(
-        re['id_section'], re['id_election'], re['id_bureau'], re['id_employe'],
+        re['id_section'],
+        re['id_election'],
+        re['id_bureau'],
+        re['id_employe'],
         cni: re['cni'],
         login: re['login'],
         date_naissance: re['date_naissance'],
         image: re['image'],
         nom: re['nom'],
         prenom: re['prenom'],
+        registration_number: re['registration_number'],
+        password: re['password'],
+        confirmer: re['confirmer'],
         numero: re['numero']);
+
+
     return emp;
   }
 
