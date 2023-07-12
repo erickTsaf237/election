@@ -61,14 +61,14 @@ class _Candidat extends State<Candidat> {
                             fontStyle: FontStyle.italic)),
                   ),),
                 Text(
-                  'du ${candidat.parti}', style: TextStyle(color: Color.fromRGBO(120, 120, 120, 7), fontSize: 20),),
-
+                  'du ${candidat.parti}', style:  const TextStyle(color: Color.fromRGBO(120, 120, 120, 7), fontSize: 20),),
               ],
 
             ))
           ],),
         ),
         onTap:() {
+
           showDialog(context: context, builder: (context)=> CreateCandidat(candidat: candidat));
           // Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateCandidat(candidat: candidat,)));
         },

@@ -122,10 +122,12 @@ class _MySectionePage extends State<MySectionePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-     return DefaultTabController(length: 2, child: Scaffold(
+     return DefaultTabController(length: 3, child: Scaffold(
        body: TabBarView(children: [
          getListeSectionItem(context),
-         getListeBureauItem(context)
+         getListeBureauItem(context),
+         // getListeBureauItem(context)
+         getListeDemandeElecteur(context)
        ],),
        drawer: MonDrawer(),
        appBar: AppBar(
@@ -133,6 +135,7 @@ class _MySectionePage extends State<MySectionePage> {
          bottom:  TabBar(tabs: const [
            Text('Employes', style: TextStyle(fontSize: 20)),
            Text('Bureaux', style: TextStyle(fontSize: 20)),
+           Text('Electeur', style: TextStyle(fontSize: 20)),
          ], onTap: (int index){
            tabIndex = index;
            _incrementCounter();

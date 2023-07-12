@@ -2,6 +2,7 @@
 import 'package:election/backend/electeur_dto.dart';
 import 'package:election/bureau/bureau.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../backend/config.dart';
 
@@ -46,6 +47,9 @@ class _MyCreateElecteur extends State<MyCreateElecteur>{
           controller: CNIController,
           // initialValue: depence.id!= null? "${depence.libele}":"",
           decoration: const InputDecoration(labelText: 'CNI numeber'),
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly // ne permet que la saisie de chiffres
+          ],
           validator: (value) {
             if (value!.isEmpty) {
               return 'Please enter your id Cart number';
@@ -53,7 +57,7 @@ class _MyCreateElecteur extends State<MyCreateElecteur>{
             return null;
           },
 
-          onSaved: (value) => electeur.cni = value!,
+          onSaved: (value) => electeur.numero_de_cni = value!,
         ),
         const SizedBox(
           height: 16.0,
@@ -101,7 +105,7 @@ class _MyCreateElecteur extends State<MyCreateElecteur>{
             return null;
           },
 
-          onSaved: (value) => electeur.login = value!,
+          onSaved: (value) => electeur.email = value!,
         ),
         const SizedBox(
           height: 16.0,

@@ -102,4 +102,7 @@ class ElectionDTO extends BackendConfig {
     return BackendConfig.getAll(
         'election/organisation', MyHomePage.currentUser.organisation!.id!);
   }
+  static getAllBureaufromSection(String idSection, String idElection){
+    return BackendConfig.getAll('bureau/section/election/$idSection', idElection);
+  }
 }

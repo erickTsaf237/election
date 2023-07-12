@@ -17,6 +17,7 @@ import '../backend/electeur_dto.dart';
 import '../backend/election.dart';
 import '../backend/employe.dart';
 import '../bureau/bureau.dart';
+import '../bureau/bureau_page.dart';
 import '../candidat/candidat.dart';
 import '../election/election.dart';
 import '../employe/employe.dart';
@@ -153,7 +154,7 @@ class _MyElectionPage extends State<MyElectionPage> {
           children: [
             getCandidatListe(context),
             getBureauListe(context),
-            getListeElecteur()
+            getListeDemandeElecteur(context)
           ],
         ),
         appBar: AppBar(
@@ -277,9 +278,9 @@ class _MyElectionPage extends State<MyElectionPage> {
                         DataCell(Text(element.nom), onTap: () {}),
                         DataCell(Text(element.prenom), onTap: () {}),
                         DataCell(Text(element.confirmer), onTap: () {}),
-                        DataCell(Text(element.login), onTap: () {}),
+                        DataCell(Text(element.email), onTap: () {}),
                         DataCell(Text(element.password), onTap: () {}),
-                        DataCell(Text(element.cni), onTap: () {}),
+                        DataCell(Text(element.numero_de_cni), onTap: () {}),
                         DataCell(Text(element.registration_number),
                             onTap: () {}),
                         DataCell(Text(element.date_naissance), onTap: () {}),

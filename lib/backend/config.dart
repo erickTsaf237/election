@@ -13,7 +13,7 @@ import 'election.dart';
 abstract class BackendConfig{
 
  static const String host = "http://localhost:3000";
- // static const String host = "https://organisations.adaptable.app";
+ //  static const String host = "https://organisations.adaptable.app";
  //  static const String host = "http://192.168.43.19:3000";
   //http://192.168.43.240:4000/classes
   static String token = '';
@@ -101,14 +101,26 @@ abstract class BackendConfig{
         },
         body: jsonEncode(await toJson2())
     );
-    // return await logUserIn(res);
-    // print(jsonEncode(res.body));
-    // print(res.body);
-
     return true;
   }
 
+  Future<http.Response> updateSomme(String path, String id, Map<String, String> object) async {
+    print('${BackendConfig.host}/$path/${id}');
+    final res = await http.put(Uri.parse("${BackendConfig.host}/$path/${id}"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'authorization': 'Bearer $token'
+        },
+        body: jsonEncode(toJson())
+    );
+    print('${BackendConfig.host}/$path/${id}**********************');
+    return res;
+  }
+
+
+
   static Future<http.Response> getAll(String path, String id) async {
+    print("${BackendConfig.host}/$path/$id");
     var res = await http.get(Uri.parse("${BackendConfig.host}/$path/$id"),
         headers: <String, String>{
           'Content-Type': 'application/json',

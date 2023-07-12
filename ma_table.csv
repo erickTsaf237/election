@@ -1,4 +1,4 @@
-id_election,id_employe,id_bureau,id_section,nom,prenom,confirmer,login,password,image,cni,registration_number,date_naissance,numero
+id_election,id_employe,id_bureau,id_section,nom,prenom,confirmer,email,password,image,numero_de_cni,registration_number,date_naissance,numero
 648ee499bf41b1924bd32126,648ef1aa622cfa65525405c5,648ee499bf41b1924bd32126,648ee74dbf41b1924bd32159,Nteudem,erick,false,login,password,C:\Users\ericktsafack\Downloads\images (1).jfif,154210120,registration_number,11/11/2000,654584512
 648ee499bf41b1924bd32126,648ef1d8622cfa65525405cf,648ee499bf41b1924bd32126,648ee74dbf41b1924bd32159,DJomou,Loic,false,login,password,C:\Users\ericktsafack\Download\kabral(2).jfif,154210129,registration_number,08/06/2001,682454512
 648ee499bf41b1924bd32126,648ef1d8622cfa65525405cf,648ee499bf41b1924bd32126,648ee74dbf41b1924bd32159,Donfack,Vanelle,false,login,password,C:\Users\ericktsafack\Downloads\fru ndi.jfif,154210128,registration_number,12/01/2002,699893210

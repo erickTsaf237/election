@@ -101,7 +101,7 @@ class BureauDTO extends BackendConfig {
   static Future<http.Response> getAll() {
     print('${BackendConfig.curenSection!.id!} eeeeeeeeee');
     return BackendConfig.getAll(
-        'bureau/section', BackendConfig.curenSection!.id!);
+        'bureau/section/election/${BackendConfig.curenSection!.id!}', BackendConfig.curenElectifon!.id!);
   }
 
   static getAllByIdElection(String idElection) {
@@ -110,7 +110,7 @@ class BureauDTO extends BackendConfig {
           'bureau/election', idElection);
     }
     return BackendConfig.getAll(
-        'bureau/section/election/$idElection', BackendConfig.curenSection!.id!);
+        'bureau/section/election/${BackendConfig.curenSection!.id!}', idElection);
   }
 
   static Future<http.Response> getOne(id, {autre = ''}) async {
