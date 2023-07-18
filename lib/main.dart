@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:crypto/crypto.dart';
 
 import 'package:election/backend/config.dart';
 import 'package:election/backend/employe.dart';
@@ -99,3 +101,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return null;
   }
 }
+
+/*Uint8List encrypt(Uint8List data, Uint8List key, Uint8List iv) {
+  final cipher = AES_CBC(key);
+  return cipher.encrypt(data, iv: iv);
+}
+
+Uint8List decrypt(Uint8List data, Uint8List key, Uint8List iv) {
+  final cipher = AES_CBC(key);
+  return cipher.decrypt(data, iv: iv);
+}*/

@@ -28,7 +28,8 @@ class MyLogin extends StatefulWidget {
 
 class _MyLogin extends State<MyLogin> {
 
-  var loginController = TextEditingController(text: 'gobinanelson@gmail.com');
+  var loginController = TextEditingController(text: 'djomouloic@gmail.com');
+  // var loginController = TextEditingController(text: 'gobinanelson@gmail.com');
   var passwordController = TextEditingController(text: '123456789');
   var confirmationController = TextEditingController();
   final _formKey = GlobalKey<FormState>();

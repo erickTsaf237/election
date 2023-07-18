@@ -1,12 +1,17 @@
-import 'dart:convert';
+import 'dart:convert' as convert;
 
 import 'package:election/backend/config.dart';
 import 'package:election/bureau/create_bureau.dart';
+import 'package:election/bureau/scanner_qr.dart';
 import 'package:election/composant/MonDrawer.dart';
 import 'package:election/electeur/electeur_button.dart';
+import 'package:election/machine/create_machine.dart';
+import 'package:election/machine/machine_list.dart';
+import 'package:election/tools/qr_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../backend/bureau_dto.dart';
 import '../backend/electeur_dto.dart';
@@ -14,9 +19,30 @@ import '../electeur/createElecteur.dart';
 import '../main.dart';
 import 'bureau.dart';
 
+/*chiffrerDonnee(String plaintext){
+  final key = convert.Key.fromUtf8('maclédechiffrement123')
+
+// La chaîne de texte à chiffrer
+// Convertir la clé en bytes
+  final keyBytes = convert.utf8.encode(key.toString());
+
+// Convertir le texte en bytes
+  final plaintextBytes = convert.utf8.encode(plaintext);
+
+// Initialiser le chiffreur AES avec la clé
+  final cipher = convert.AesCrypt(keyBytes);
+
+// Chiffrer les données
+  final encryptedBytes = cipher.encrypt(plaintextBytes);
+
+// Convertir les données chiffrées en base64
+  final encryptedString = convert.base64.encode(encryptedBytes);
+}*/
+
 class BureauPage extends StatelessWidget {
   late BureauDTO bureauDTO;
 
+  // static State? etat;
   BureauPage(this.bureauDTO);
 
   @override
@@ -43,8 +69,8 @@ class _MyBureauPage extends State<MyBureauPage> {
 
   _MyBureauPage(this.bureau);
 
-  late List<String> pageList = ['Electeur', 'Employe', 'Info'];
-  late String page = 'Electeur';
+  late List<String> pageList = ['Voter', 'Electeur', 'Employe', 'Info'];
+  late String page = 'Employe';
 
   void _incrementCounter() {
     Bureau.etat = this;
@@ -80,7 +106,11 @@ class _MyBureauPage extends State<MyBureauPage> {
         ],
       ),
       // drawer: MyHomePage.who=='admin'?null: const MonDrawer(),
-      body: getTableauElecteur(),
+      body: page == 'Voter'
+          ? MyQRCode.displayQRCode('${bureau.id_election}/${bureau.id!}')
+          : page == 'Employe'
+              ? getListeMachine(context, bureau.id!)
+              : getTableauElecteur(),
       floatingActionButton:
           getFlotting(), // This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -110,7 +140,7 @@ class _MyBureauPage extends State<MyBureauPage> {
           } else if (response.hasData) {
             String? a = response.data?.body;
             String b = a!;
-            data = jsonDecode(b);
+            data = convert.jsonDecode(b);
             int i = 0;
             int taille = data.length;
             if (taille == 0) {
@@ -186,9 +216,7 @@ class _MyBureauPage extends State<MyBureauPage> {
             border: TableBorder.all(
               color: Colors.black,
               width: 1,
-            )
-        )
-    );
+            )));
   }
 
   Widget buildPage(BuildContext context) {
@@ -224,17 +252,42 @@ class _MyBureauPage extends State<MyBureauPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MyCreateElecteur(ElecteurDTO(
-                        bureau.id_section,
-                        bureau.id_election,
-                        bureau.id!,
-                        MyHomePage.currentEMploye.id!))));
+                    builder: (context) =>
+                        MyCreateElecteur(ElecteurDTO(
+                            bureau.id_section,
+                            bureau.id_election,
+                            bureau.id!,
+                            MyHomePage.currentEMploye.id!))));
+          },
+          tooltip: 'Importer une Liste d\'electeurs',
+          child: const Icon(Icons.add),
+        );
+      } else if (page == 'Employe' &&
+          bureau.id_responsable == MyHomePage.currentEMploye.id!) {
+        // if (page == pageList[0] && MyHomePage.currentEMploye.id == BackendConfig.curenSection?.id_responsable) {
+        return FloatingActionButton(
+          onPressed: () async {
+            Bureau.etat = this;
+            showDialog(
+                context: context, builder: (context) => CreateMachine(bureau));
           },
           tooltip: 'Importer une Liste d\'electeurs',
           child: const Icon(Icons.add),
         );
       }
+      else if (page == 'Electeur' && TargetPlatform.android==Theme.of(context).platform ) {
+        // if (page == pageList[0] && MyHomePage.currentEMploye.id == BackendConfig.curenSection?.id_responsable) {
+        return FloatingActionButton(
+          onPressed: () async {
+            Bureau.etat = this;
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> QRViewExample( bureau,)));
+          },
+          tooltip: 'Scanner un Electeur',
+          child: const Icon(Icons.add),
+        );
+      }
     }
+
     return null;
   }
 
@@ -259,7 +312,7 @@ getListeBureauItem(BuildContext context) {
           } else if (response.hasData) {
             String? a = response.data?.body;
             String b = a!;
-            dynamic r = jsonDecode(b);
+            dynamic r = convert.jsonDecode(b);
             int taille = r.length;
             if (taille == 0) {
               return const Text(
@@ -306,7 +359,7 @@ getListeDemandeElecteur(BuildContext context) {
           } else if (response.hasData) {
             String? a = response.data?.body;
             String b = a!;
-            dynamic r = jsonDecode(b);
+            dynamic r = convert.jsonDecode(b);
             int taille = r.length;
             ElecteurDTO.electeurs = [];
             // print(BackendConfig.curenSection!.id!);

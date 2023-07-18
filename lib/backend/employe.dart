@@ -244,4 +244,16 @@ class EmployeDTO extends BackendConfig {
     }
     return res;
   }
+
+  Future<bool> setElecteurIdIntoMyMyMachine( String electionId, String electeurId) async {
+    var a = await http.put(Uri.parse('${BackendConfig.host}/machine/employe/election/electeur/$id/$electionId/$electeurId'));
+      print('${BackendConfig.host}/machine/employe/election/electeur/$id/$electionId/$electeurId');
+      print(a.statusCode);
+    if(a.statusCode >=200 && a.statusCode < 300){
+      print('le corp de: ${a.body}');
+      var r = jsonDecode(a.body);
+      return r == true;
+    }
+    return false;
+  }
 }

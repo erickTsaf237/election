@@ -12,9 +12,9 @@ import 'election.dart';
 
 abstract class BackendConfig{
 
- static const String host = "http://localhost:3000";
+ // static const String host = "http://localhost:3000";
  //  static const String host = "https://organisations.adaptable.app";
- //  static const String host = "http://192.168.43.19:3000";
+  static const String host = "http://192.168.43.19:3000";
   //http://192.168.43.240:4000/classes
   static String token = '';
   static State? etat;
@@ -142,6 +142,9 @@ abstract class BackendConfig{
      return res;
   }
   static Future<http.Response> getOne(String path, String id) async {
+    print('8888888888888888888888888888888888888888888');
+    print("${BackendConfig.host}/$path/$id");
+    print('8888888888888888888888888888888888888888888');
      var res = await http.get(Uri.parse("${BackendConfig.host}/$path/$id"),
          headers: <String, String>{
            'Content-Type': 'application/json',

@@ -77,7 +77,7 @@ class _AfficherDemandeElecteur extends State<AfficherDemandeElecteur> {
                dropdownMenuEntries: data.map<DropdownMenuEntry<Object>>((e) {
               return DropdownMenuEntry(
                 value: e['_id'].toString(),
-                label: '${e['nom'].toString()}}',
+                label: '${e['nom'].toString()}',
               );
             }).toList(),
             );
@@ -226,7 +226,7 @@ class _AfficherDemandeElecteur extends State<AfficherDemandeElecteur> {
                         }
                       }
                     },
-                    child: const Text('Renvoyer la electeur')),
+                    child: const Text('Renvoyer la demande')),
               ],
             )),
             Expanded(
@@ -254,7 +254,7 @@ class _AfficherDemandeElecteur extends State<AfficherDemandeElecteur> {
                         }
                       }
                     },
-                    child: const Text('Confirmer l\'electeur'))
+                    child: const Text('Confirmer la demande'))
               ],
             ))
           ],

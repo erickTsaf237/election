@@ -12,7 +12,9 @@ import '../backend/candidat.dart';
 class Candidat extends StatefulWidget {
   late CandidatDTO candidat;
 
-  Candidat(this.candidat);
+  Candidat(this.candidat){
+    candidatList.add(candidat);
+  }
 
   @override
   State<StatefulWidget> createState() {

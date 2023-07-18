@@ -59,7 +59,7 @@ class _MyAccueille extends State<MyAccueille> {
                   baseColor: Colors.red,
                   highlightColor: Colors.yellow,
                   child: const Text(
-                    'Shimmer',
+                    'Elections',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 40.0,

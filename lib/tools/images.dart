@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path/path.dart' as Path;
@@ -36,7 +36,7 @@ List<String> imageExtension = [
 ];
 
 Future<File?> pickImage(State state, File? imageFile) async {
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  /*if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     return await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: imageExtension)
         .then((value) {
@@ -51,7 +51,7 @@ Future<File?> pickImage(State state, File? imageFile) async {
             : null;
       }
     });
-  } else if (Platform.isAndroid || Platform.isIOS) {
+  } else */if (Platform.isAndroid || Platform.isIOS) {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {

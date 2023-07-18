@@ -210,19 +210,36 @@ class ElecteurDTO extends BackendConfig {
         'employe/section', BackendConfig.curenSection!.id!);
   }
 
-  static getOne(id, {autre = ''}) async {
+  static Future<ElecteurDTO?> getOne(id, {autre = ''}) async {
     http.Response res;
+    print('electeur/election/$id/$autre');
     if (autre != '') {
-      res = await BackendConfig.getOne('electeur', '$id/$autre');
+      res = await BackendConfig.getOne('electeur/election', '$id/$autre');
     } else {
       res = await BackendConfig.getOne('electeur', id);
     }
-    return res;
+    if (res.statusCode >= 200 && res.statusCode < 300){
+      try{
+        return ElecteurDTO.fromDemande(jsonDecode(res.body)!);
+      }catch(e){
+        print('************************************************************');
+        print('la caversion du resultat a echoue');
+        print(res.body);
+        print('************************************************************');
+      }
+    }
+    return null;
   }
 
   static getElecteurBureau() {
     return BackendConfig.getAll(
         'electeur/bureau', BackendConfig.curenBureau!.id!);
-
   }
+
+  static definirCOmmeVotant() {
+    return BackendConfig.getAll(
+        'electeur/bureau', BackendConfig.curenBureau!.id!);
+  }
+
+
 }

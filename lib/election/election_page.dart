@@ -8,7 +8,7 @@ import 'package:election/candidat/create_candidat.dart';
 import 'package:election/composant/MonFIle_picker.dart';
 import 'package:election/election/createElection.dart';
 import 'package:election/election/create_champ_electeur.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,6 +25,9 @@ import '../main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:shimmer/shimmer.dart';
+
+
+ List<CandidatDTO> candidatList = [];
 
 class ElectionPage extends StatelessWidget {
   late ElectionDTO election;
@@ -131,7 +134,7 @@ class _MyElectionPage extends State<MyElectionPage> {
 
     // Écrit la nouvelle chaîne CSV dans le fichier
     sink.write(newCsv);
-    return FilePicker.platform
+    return '';/*FilePicker.platform
         .pickFiles(allowedExtensions: ['csv']).then((value) {
       if (value != null) {
         setState(() {
@@ -141,7 +144,7 @@ class _MyElectionPage extends State<MyElectionPage> {
         print(_fileName);
       }
       return _fileName;
-    });
+    });*/
   }
 
   @override
@@ -348,6 +351,7 @@ class _MyElectionPage extends State<MyElectionPage> {
             if (response.hasError) {
               return Text('Il y\'a eu une erreur');
             } else if (response.hasData) {
+              candidatList = [];
               String? a = response.data?.body;
               String b = a!;
               dynamic r = jsonDecode(b);
